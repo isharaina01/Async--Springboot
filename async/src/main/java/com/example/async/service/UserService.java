@@ -6,6 +6,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -46,6 +49,16 @@ public class UserService {
         List<User> users= userRepository.findAll();
         return CompletableFuture.completedFuture((users));
     }
+//Sorting
+   public List<User> getListOfUsersWithSorting(String field){
+        return userRepository.findAll(Sort.by(Sort.Direction.ASC,field));
+   }
+
+   //Pagination
+   public Page<User> getListOfUsersWithPagination(int offset,int pageSize){
+       return userRepository.findAll(PageRequest.of(offset, pageSize));
+
+   }
 
     List<User> parseCsvFile(final MultipartFile file){
         List<User> users=new ArrayList<>();

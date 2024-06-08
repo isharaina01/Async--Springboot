@@ -21,5 +21,6 @@ public class User {
     private String name;
     private String emailId;
     private String gender;
+    //private Integer salary;
 
 }
